@@ -1,4 +1,4 @@
-from flask import Flask, abort, request, jsonify, g, url_for
+from flask import Flask, abort, request, jsonify
 from passlib.apps import custom_app_context as pwd_context
 from flask_mysqldb import MySQL
 from flask_jwt_extended import (
@@ -6,10 +6,12 @@ from flask_jwt_extended import (
     jwt_refresh_token_required, create_refresh_token,
     get_jwt_identity, get_raw_jwt
 )
-from .db_queries import PoliticCenterQueries
 from dotenv import load_dotenv
 import os
 import re
+import sys
+sys.path.append("./")
+from queries.db_queries import PoliticCenterQueries
 
 load_dotenv()
 
