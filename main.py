@@ -12,6 +12,7 @@ import re
 import sys
 sys.path.append("./")
 from queries.db_queries import PoliticCenterQueries
+from utils.user import User
 
 load_dotenv()
 
@@ -28,6 +29,7 @@ mysql = MySQL(app)
 jwt = JWTManager(app)
 PoliticCenterQueries = PoliticCenterQueries()
 blacklist = set()
+User_validation = User()
 
 
 class User:
@@ -136,6 +138,17 @@ def new_user():
     current_username = PoliticCenterQueries.get_user_info(username=username, mysql=mysql)
     if username is None or password is None:
         abort(400)  # missing arguments
+    if not username or not password:
+        return jsonify({'data': {
+            'msg': 'Error registering new user, missing credentials',
+            'username': 'is blank'
+        }}), 400
+
+    if re.search(r"\s", username) or re.search(r"\s", password):
+        return jsonify({'data': {
+            'msg': 'Error registering new user, username or password has blank spaces',
+            'username': username
+        }}), 400
     if current_username and current_username.get('username') == username:
         return jsonify({'data': {
             'msg': 'Error registering new user, this user already exist',
