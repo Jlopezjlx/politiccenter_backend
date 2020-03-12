@@ -143,11 +143,12 @@ def new_user():
     user_validation_response = User_validation.validate_username_and_pass(username, password)
     if user_validation_response:
         return jsonify(user_validation_response), 400
-    if current_username.get('username') == username:
-        return jsonify({'data': {
-            'msg': 'Error registering new user, this user already exist',
-            'username': username
-        }}), 400
+    if current_username:
+        if current_username.get('username') == username:
+            return jsonify({'data': {
+                'msg': 'Error registering new user, this user already exist',
+                'username': username
+            }}), 400
     pass_checker = validate_password(password=password)
     if pass_checker:
         user = User()
