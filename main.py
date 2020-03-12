@@ -113,7 +113,7 @@ def login():
         }}), 401
     if re.search(r"\s", username) or re.search(r"\s", password):
         return jsonify({'data': {
-            'msg': 'Error registering new user, username or password has blank spaces',
+            'msg': 'Error, username or password has blank spaces',
         }}), 401
     try:
         user_info = PoliticCenterQueries.get_user_info(username=username, mysql=mysql)
@@ -140,22 +140,9 @@ def new_user():
     username = data.get('username')
     password = data.get('password')
     current_username = PoliticCenterQueries.get_user_info(username=username, mysql=mysql)
-    if username is None or password is None:
-        abort(400)  # missing arguments
-    if not username:
-        return jsonify({'data': {
-            'msg': 'Error registering new user, missing credentials',
-            'username': 'is blank'
-        }}), 400
-    if not password:
-        return jsonify({'data': {
-            'msg': 'Error registering new user, missing credentials',
-            'username': 'is blank'
-        }}), 400
-    if re.search(r"\s", username) or re.search(r"\s", password):
-        return jsonify({'data': {
-            'msg': 'Error registering new user, username or password has blank spaces',
-        }}), 400
+    user_validation_response = User_validation.validate_username_and_pass(username, password)
+    if user_validation_response:
+        return jsonify(user_validation_response), 400
     if current_username.get('username') == username:
         return jsonify({'data': {
             'msg': 'Error registering new user, this user already exist',

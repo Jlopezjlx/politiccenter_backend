@@ -4,15 +4,18 @@ import re
 
 class User:
     def validate_username_and_pass(self, username, password):
-        if not username or not password:
-            return jsonify({'data': {
+        if not username:
+            return {'data': {
                 'msg': 'Error registering new user, missing credentials',
-                'username': username
-            }}), 400
-
+                'username': 'is blank'
+            }}
+        if not password:
+            return {'data': {
+                'msg': 'Error registering new user, missing credentials',
+                'password': 'is blank'
+            }}
         if re.search(r"\s", username) or re.search(r"\s", password):
-            return jsonify({'data': {
+            return {'data': {
                 'msg': 'Error registering new user, username or password has blank spaces',
-                'username': username
-            }}), 400
+            }}
 
