@@ -12,6 +12,7 @@ import re
 import sys
 sys.path.append("./")
 from queries.db_queries import PoliticCenterQueries
+from utils.user import User
 
 load_dotenv()
 
@@ -28,6 +29,7 @@ mysql = MySQL(app)
 jwt = JWTManager(app)
 PoliticCenterQueries = PoliticCenterQueries()
 blacklist = set()
+User_validation = User()
 
 
 class User:
@@ -109,6 +111,10 @@ def login():
         return jsonify({'data': {
             'msg': 'Error, missing credentials'
         }}), 401
+    if re.search(r"\s", username) or re.search(r"\s", password):
+        return jsonify({'data': {
+            'msg': 'Error, username or password has blank spaces',
+        }}), 401
     try:
         user_info = PoliticCenterQueries.get_user_info(username=username, mysql=mysql)
         checked = _user.verify_password(password, user_info.get('pass_hash'))
@@ -134,13 +140,15 @@ def new_user():
     username = data.get('username')
     password = data.get('password')
     current_username = PoliticCenterQueries.get_user_info(username=username, mysql=mysql)
-    if username is None or password is None:
-        abort(400)  # missing arguments
-    if current_username and current_username.get('username') == username:
-        return jsonify({'data': {
-            'msg': 'Error registering new user, this user already exist',
-            'username': username
-        }}), 400
+    user_validation_response = User_validation.validate_username_and_pass(username, password)
+    if user_validation_response:
+        return jsonify(user_validation_response), 400
+    if current_username:
+        if current_username.get('username') == username:
+            return jsonify({'data': {
+                'msg': 'Error registering new user, this user already exist',
+                'username': username
+            }}), 400
     pass_checker = validate_password(password=password)
     if pass_checker:
         user = User()
