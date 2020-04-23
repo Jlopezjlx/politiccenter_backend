@@ -12,3 +12,4 @@ def test_register(client):
     assert response.status_code is 201
     print(response.get_json())
 
+
