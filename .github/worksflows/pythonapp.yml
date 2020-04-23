@@ -25,6 +25,13 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+    - name: Define en variables
+      - env:
+          SECRET_KEY = 'This a good aplication'
+          MYSQL_HOST = 'politiccenter.c8ks72g1m2ln.us-east-1.rds.amazonaws.com'
+          MYSQL_USER = 'admin'
+          MYSQL_PASSWORD = 'politicCenter45'
+          MYSQL_DB = 'politiccenter'
     - name: Test with pytest
       run: |
         pip install pytest
