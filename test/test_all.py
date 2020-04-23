@@ -7,7 +7,7 @@ def test_home(client):
 
 
 def test_register(client):
-    response = client.post('/auth/register', json={'username': 'User565h', 'password': 'User673##'},
+    response = client.post('/auth/register', json={'username': 'User5659', 'password': 'User673##'},
                            content_type='application/json', charset='UTF-8')
     assert response.status_code is 201
     print(response.get_json())

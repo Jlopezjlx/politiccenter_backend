@@ -2,6 +2,9 @@ import tempfile
 
 import pytest
 import os
+import sys
+
+sys.path.append('./')
 
 from api import create_app
 
