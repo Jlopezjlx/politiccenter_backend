@@ -65,7 +65,7 @@ instance/
 docs/_build/
 # PyBuilder
 target/
-.idea
+.idea/
 # Jupyter Notebook
 .ipynb_checkpoints
 # IPython
