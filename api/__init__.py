@@ -27,7 +27,7 @@ def create_app():
         jwt = JWTManager(app)
 
     @app.route('/')
-    def hello_world():
-        return 'Hello, World!'
+    def home():
+        return 'Hello, Welcome to this API, Enjoy'
 
     return app
