@@ -93,23 +93,23 @@ def login():
         return jsonify({'data': {
             'msg': 'Error, username or password has blank spaces',
         }}), 401
-    # try:
-    user_info = PoliticCenterQueries.get_user_info(username=username, mysql=mysql)
-    checked = _user.verify_password(password, user_info.get('pass_hash'))
-    if checked:
-        ret = {
-            'access_token': create_access_token(identity=username),
-            'refresh_token': create_refresh_token(identity=username)
-        }
-        return jsonify(ret), 200
-    else:
+    try:
+        user_info = PoliticCenterQueries.get_user_info(username=username, mysql=mysql)
+        checked = _user.verify_password(password, user_info.get('pass_hash'))
+        if checked:
+            ret = {
+                'access_token': create_access_token(identity=username),
+                'refresh_token': create_refresh_token(identity=username)
+            }
+            return jsonify(ret), 200
+        else:
+            return jsonify({'data': {
+                'msg': 'Error, incorrect password'
+            }}), 401
+    except:
         return jsonify({'data': {
-            'msg': 'Error, incorrect password'
+            'msg': 'Error, incorrect credentials'
         }}), 401
-    # except:
-    #     return jsonify({'data': {
-    #         'msg': 'Error, incorrect credentials'
-    #     }}), 401
 
 
 @bp.route('/register', methods=['POST'])
