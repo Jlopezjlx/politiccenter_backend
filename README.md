@@ -6,7 +6,7 @@ This repo contains the API of the project.
 
 ## Run this project
 
-###Run locally
+###### Run locally
 
 Install dependencies:
 ```
@@ -22,7 +22,7 @@ or
 python main.py
 ```
 
-###Run with Docker
+###### Run with Docker
 Build and run image
 ```
 docker build -t "<name>"
