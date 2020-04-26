@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "6c5f228e-d42b-4c6e-82b5-d329cbc45daa",
+		"name": "politic-center",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test home",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1c8376f1-99c5-452f-b31a-fa9f9dd91d89",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Welcome message is ok\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Welcome\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				},
+				"description": "200 ok\n\nMessage contains"
+			},
+			"response": []
+		},
+		{
+			"name": "test login succesful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db097a0a-25fd-478c-844e-361c73293d43",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var data = pm.response.json();",
+							"",
+							"pm.test(\"Response has access an refresh token\", function() {",
+							"    pm.expect(data).to.be.an('object').that.has.all.keys('access_token', 'refresh_token');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"UserToTestt\", \"password\": \"Data65##$\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": "Status code is 200\n\nGet Tokens\n"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

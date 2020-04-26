@@ -1,5 +1,7 @@
-from passlib.apps import custom_app_context as pwd_context
+from passlib.context import CryptContext
 import re
+
+CryptContext = CryptContext(schemes=["sha256_crypt", "md5_crypt", "des_crypt"])
 
 
 class User:
@@ -7,12 +9,12 @@ class User:
         self.password_hash = None
 
     def hash_password(self, password):
-        self.password_hash = pwd_context.encrypt(password)
+        self.password_hash = CryptContext.hash(password)
         return self.password_hash
 
     @staticmethod
     def verify_password(password, password_hash):
-        return pwd_context.verify(password, password_hash)
+        return CryptContext.verify(password, password_hash)
 
     @staticmethod
     def validate_username_and_pass(username, password):
