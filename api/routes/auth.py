@@ -65,7 +65,7 @@ def logout():
 
 @bp.route('/test')
 @jwt_required
-def test():
+def verify():
     return 'hola test'
 
 
