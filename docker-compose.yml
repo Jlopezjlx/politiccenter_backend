@@ -1,0 +1,12 @@
+version: '3'
+services:
+  api:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - SECRET_KEY='This a good aplication'
+      - MYSQL_HOST='politiccenter.c8ks72g1m2ln.us-east-1.rds.amazonaws.com'
+      - MYSQL_USER='admin'
+      - MYSQL_PASSWORD='politicCenter45'
+      - MYSQL_DB='politiccenter'
