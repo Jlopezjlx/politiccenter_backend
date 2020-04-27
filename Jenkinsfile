@@ -22,7 +22,12 @@ pipeline {
          }
       stage('Run unittest') {
          steps {
-            sh "docker run build pytest -vv"
+            sh "docker run build -e SECRET_KEY=This a good aplication \
+                -e MYSQL_HOST=politiccenter.c8ks72g1m2ln.us-east-1.rds.amazonaws.com \
+                -e MYSQL_USER=admin \
+                -e MYSQL_PASSWORD=politicCenter45 \
+                -e MYSQL_DB=politiccenter \
+                pytest -vv"
          }
          }
       stage('Execute API test') {
