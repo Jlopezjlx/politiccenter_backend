@@ -32,12 +32,12 @@ pipeline {
          }
       stage('Deploy to QA') {
          steps {
-            sh "docker run -d -p 5000:5000 build python3 main.py"
+            sh "docker run -d --name QA -p 5000:5000 build python3 main.py"
          }
          }
       stage('Deploy to Pre-Staging') {
          steps {
-            sh "docker run -d -p 5001:5000 build python3 main.py"
+            sh "docker run -d --name staging -p 5001:5000 build python3 main.py"
          }
          }
       }
