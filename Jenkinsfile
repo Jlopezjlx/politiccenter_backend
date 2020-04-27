@@ -46,14 +46,30 @@ pipeline {
          steps {
             sh "docker stop QA"
             sh "docker rm QA"
-            sh "docker run -d --name QA -p 5000:5000 build python3 main.py"
+            sh "docker run -e SECRET_KEY='This a good aplication' \
+                -e MYSQL_HOST='politiccenter.c8ks72g1m2ln.us-east-1.rds.amazonaws.com' \
+                -e MYSQL_USER='admin' \
+                -e MYSQL_PASSWORD='politicCenter45' \
+                -e MYSQL_DB='politiccenter' \
+                -p 5000:5000 \
+                --name QA \
+                build \
+                python3 main.py"
          }
          }
       stage('Deploy to Pre-Staging') {
          steps {
             sh "docker stop staging"
             sh "docker rm staging"
-            sh "docker run -d --name staging -p 5001:5000 build python3 main.py"
+            sh "docker run -e SECRET_KEY='This a good aplication' \
+                -e MYSQL_HOST='politiccenter.c8ks72g1m2ln.us-east-1.rds.amazonaws.com' \
+                -e MYSQL_USER='admin' \
+                -e MYSQL_PASSWORD='politicCenter45' \
+                -e MYSQL_DB='politiccenter' \
+                -p 5001:5000 \
+                --name staging \
+                build \
+                python3 main.py"
          }
          }
       }
