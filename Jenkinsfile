@@ -22,7 +22,7 @@ pipeline {
          }
       stage('Run unittest') {
          steps {
-            sh "docker run build ./test/runAllTest.sh"
+            sh "docker run build pytest -vv"
          }
          }
       stage('Execute API test') {
