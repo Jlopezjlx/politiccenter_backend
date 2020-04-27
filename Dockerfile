@@ -11,8 +11,4 @@ COPY ./requirements.txt /api/requirements.txt
 WORKDIR /api
 RUN pip3 install -r requirements.txt
 COPY . /api
-ENV SECRET_KEY='This a good aplication'
-ENV MYSQL_HOST='politiccenter.c8ks72g1m2ln.us-east-1.rds.amazonaws.com'
-ENV MYSQL_USER='admin'
-ENV MYSQL_PASSWORD='politicCenter45'
-ENV MYSQL_DB='politiccenter'
+CMD ./set_env.sh
