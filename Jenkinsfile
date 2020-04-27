@@ -46,7 +46,7 @@ pipeline {
          steps {
             sh "docker stop QA"
             sh "docker rm QA"
-            sh "docker run -e SECRET_KEY='This a good aplication' \
+            sh "docker run -d -e SECRET_KEY='This a good aplication' \
                 -e MYSQL_HOST='politiccenter.c8ks72g1m2ln.us-east-1.rds.amazonaws.com' \
                 -e MYSQL_USER='admin' \
                 -e MYSQL_PASSWORD='politicCenter45' \
@@ -61,7 +61,7 @@ pipeline {
          steps {
             sh "docker stop staging"
             sh "docker rm staging"
-            sh "docker run -e SECRET_KEY='This a good aplication' \
+            sh "docker run -d -e SECRET_KEY='This a good aplication' \
                 -e MYSQL_HOST='politiccenter.c8ks72g1m2ln.us-east-1.rds.amazonaws.com' \
                 -e MYSQL_USER='admin' \
                 -e MYSQL_PASSWORD='politicCenter45' \
