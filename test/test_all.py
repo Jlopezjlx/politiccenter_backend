@@ -1,4 +1,5 @@
 from random_word import RandomWords
+import random
 generate_random_word = RandomWords()
 
 
@@ -8,8 +9,10 @@ def test_home(client):
 
 
 def test_register(client):
-    user = f'{generate_random_word.get_random_word()}78'
-    password = f'Q{generate_random_word.get_random_word()}85#3'
+    no_1 = random.randint(1, 30)
+    no_2 = random.randint(1, 30)
+    user = f'ThisIsTestUser{no_1}{no_2}'
+    password = f'QTemporalPass85#3'
     response = client.post('/auth/register', json={'username': user, 'password': password},
                            content_type='application/json', charset='UTF-8')
     assert response.status_code is 201
