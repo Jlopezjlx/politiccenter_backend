@@ -39,7 +39,7 @@ pipeline {
                 -e MYSQL_PASSWORD='politicCenter45' \
                 -e MYSQL_DB='politiccenter' \
                 build \
-                pytest -vv"
+                ./test/runAllTest.sh"
          }
          }
       stage('Deploy to QA') {
