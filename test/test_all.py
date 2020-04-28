@@ -24,4 +24,3 @@ def test_login(client):
     response = client.post('/auth/login', json={'username': user, 'password': password},
                            content_type='application/json', charset='UTF-8')
     assert response.status_code is 200
-
