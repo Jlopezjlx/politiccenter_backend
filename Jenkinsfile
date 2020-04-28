@@ -10,11 +10,6 @@ pipeline {
     }
 
    stages {
-      stage('Clone repo') {
-         steps {
-            git 'https://github.com/Jlopezjlx/politiccenter_backend.git'
-         }
-         }
       stage('Build for test') {
          steps {
             sh "docker build -t 'build' ."
