@@ -10,7 +10,7 @@ pipeline {
     }
 
    stages {
-      stage('Build for test') {
+      stage('Build') {
          steps {
             sh "docker build -t 'build' ."
          }
@@ -52,9 +52,20 @@ pipeline {
                 python3 main.py"
          }
          }
-      stage('Performance testing') {
+      stage('Run Performance testing for QA environment') {
          steps {
             sh 'docker run --volume $PWD/test:/mnt/locust -e LOCUSTFILE_PATH=/mnt/locust/locustfile.py -e TARGET_URL=https://shielded-peak-02148.herokuapp.com/ -e LOCUST_OPTS="--clients=2 --no-web --run-time=30" locustio/locust'
+         }
+         }
+      stage('Integration and API test for QA environment') {
+         steps {
+            sh "docker run -e SECRET_KEY='This a good aplication' \
+                -e MYSQL_HOST='politiccenter.c8ks72g1m2ln.us-east-1.rds.amazonaws.com' \
+                -e MYSQL_USER='admin' \
+                -e MYSQL_PASSWORD='politicCenter45' \
+                -e MYSQL_DB='politiccenter' \
+                build \
+                ./test/runAllTest.sh"
          }
          }
       stage('Deploy to Pre-Staging') {
@@ -70,6 +81,22 @@ pipeline {
                 --name staging \
                 build \
                 python3 main.py"
+         }
+         }
+      stage('Run Performance testing for staging environment') {
+         steps {
+            sh 'docker run --volume $PWD/test:/mnt/locust -e LOCUSTFILE_PATH=/mnt/locust/locustfile.py -e TARGET_URL=https://shielded-peak-02148.herokuapp.com/ -e LOCUST_OPTS="--clients=2 --no-web --run-time=30" locustio/locust'
+         }
+         }
+      stage('Integration and API test for staging environment') {
+         steps {
+            sh "docker run -e SECRET_KEY='This a good aplication' \
+                -e MYSQL_HOST='politiccenter.c8ks72g1m2ln.us-east-1.rds.amazonaws.com' \
+                -e MYSQL_USER='admin' \
+                -e MYSQL_PASSWORD='politicCenter45' \
+                -e MYSQL_DB='politiccenter' \
+                build \
+                ./test/runAllTest.sh"
          }
          }
       }
