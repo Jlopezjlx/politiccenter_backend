@@ -86,10 +86,10 @@ pipeline {
                 ./test/runAllTest.sh"
          }
          }
-      }
       stage('Run Performance testing for staging environment') {
          steps {
             sh 'docker run --volume $PWD/test:/mnt/locust -e LOCUSTFILE_PATH=/mnt/locust/locustfile.py -e TARGET_URL=https://shielded-peak-02148.herokuapp.com/ -e LOCUST_OPTS="--clients=2 --no-web --run-time=30" locustio/locust'
          }
          }
+      }
    }
