@@ -17,6 +17,7 @@
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
+							"",
 							"pm.test(\"Welcome message is ok\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"Welcome\");",
 							"});"
@@ -66,7 +67,19 @@
 							"",
 							"pm.test(\"Response has access an refresh token\", function() {",
 							"    pm.expect(data).to.be.an('object').that.has.all.keys('access_token', 'refresh_token');",
-							"});"
+							"    pm.environment.set(\"Token\", data.access_token);",
+							"});",
+							"",
+							"",
+							"pm.sendRequest({",
+							"    url: pm.variables.get(\"url\") + '/auth/test',",
+							"    method: 'GET',",
+							"    header: {'Authorization' : 'Bearer ' + pm.variables.replaceIn('{{Token}}')},",
+							"}, function (err, res) {",
+							"    pm.test(\"Access token is working fine\", function () {",
+							"        pm.expect(res).to.have.status(200);",
+							"    });",
+							"})"
 						],
 						"type": "text/javascript"
 					}
@@ -77,7 +90,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"username\":\"UserToTestt\", \"password\": \"Data65##$\"}",
+					"raw": "{\"username\":\"UserAzure\", \"password\": \"Data65##$\"}",
 					"options": {
 						"raw": {
 							"language": "json"
