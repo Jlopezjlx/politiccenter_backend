@@ -44,11 +44,6 @@ pipeline {
                 python3 main.py"
          }
          }
-      stage('Run Performance testing for QA environment') {
-         steps {
-            sh 'docker run --volume $PWD/test:/mnt/locust -e LOCUSTFILE_PATH=/mnt/locust/locustfile.py -e TARGET_URL=https://shielded-peak-02148.herokuapp.com/ -e LOCUST_OPTS="--clients=2 --no-web --run-time=30" locustio/locust'
-         }
-         }
       stage('Integration and API test for QA environment') {
          steps {
             sh "docker run -e SECRET_KEY='This a good aplication' \
@@ -58,6 +53,11 @@ pipeline {
                 -e MYSQL_DB='politiccenter' \
                 build \
                 ./test/runAllTest.sh"
+         }
+         }
+      stage('Run Performance testing for QA environment') {
+         steps {
+            sh 'docker run --volume $PWD/test:/mnt/locust -e LOCUSTFILE_PATH=/mnt/locust/locustfile.py -e TARGET_URL=https://shielded-peak-02148.herokuapp.com/ -e LOCUST_OPTS="--clients=2 --no-web --run-time=30" locustio/locust'
          }
          }
       stage('Deploy to Pre-Staging') {
@@ -75,11 +75,6 @@ pipeline {
                 python3 main.py"
          }
          }
-      stage('Run Performance testing for staging environment') {
-         steps {
-            sh 'docker run --volume $PWD/test:/mnt/locust -e LOCUSTFILE_PATH=/mnt/locust/locustfile.py -e TARGET_URL=https://shielded-peak-02148.herokuapp.com/ -e LOCUST_OPTS="--clients=2 --no-web --run-time=30" locustio/locust'
-         }
-         }
       stage('Integration and API test for staging environment') {
          steps {
             sh "docker run -e SECRET_KEY='This a good aplication' \
@@ -92,4 +87,9 @@ pipeline {
          }
          }
       }
+      stage('Run Performance testing for staging environment') {
+         steps {
+            sh 'docker run --volume $PWD/test:/mnt/locust -e LOCUSTFILE_PATH=/mnt/locust/locustfile.py -e TARGET_URL=https://shielded-peak-02148.herokuapp.com/ -e LOCUST_OPTS="--clients=2 --no-web --run-time=30" locustio/locust'
+         }
+         }
    }
