@@ -19,7 +19,6 @@ def create_app():
     app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
     app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
     app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
-    app.config['JWT_BLACKLIST_ENABLED'] = True
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
     with app.app_context():
         routes.init_app(app)
