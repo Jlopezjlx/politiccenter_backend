@@ -13,6 +13,7 @@ sys.path.append("./")
 from api.db.db_queries import PoliticCenterQueries
 from api.models.user import User
 
+
 mysql = MySQL()
 jwt = JWTManager()
 PoliticCenterQueries = PoliticCenterQueries()
