@@ -102,7 +102,6 @@ def login():
                 'access_token': create_access_token(identity=username),
                 'refresh_token': create_refresh_token(identity=username)
             }
-            
             return jsonify(ret), 200
         else:
             return jsonify({'data': {
